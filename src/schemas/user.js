@@ -18,13 +18,15 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    favoriteGroups: {
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Group' }],
+    },
     createdAt: {
         type: Date,
         default: Date.now,
     },
     deletedAt: {
-        type: Date,
-        default: Date.now,
+        type: Date
     },
 });
 export default mongoose.model('User', userSchema);
