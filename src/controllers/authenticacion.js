@@ -24,9 +24,6 @@ export function generateToken(payload){
 export function verifyToken(req, res, next){
 
     const token = req.header("authorization")?.replace("Bearer ", "");
-
-
-    console.log("Token", token);
     
     if (!token) return res.status(401).json({ message: 'Token is required' });
 
@@ -98,7 +95,7 @@ class authController {
     }
 
     async signOut(req, res) {
-        
+        res.status(200).json({ message: "User signed out" });
     }
 
 }

@@ -1,4 +1,5 @@
 import UserModel from "../models/user.js";
+import Logger from "../utils/logger.js";
 
 class userController {
 
@@ -6,10 +7,11 @@ class userController {
 
     }
 
-    // Manejo de errores y validacion.
     async createUser(req,res){
         try{
             const data = await UserModel.createUser(req.body);
+            
+            Logger.info(`User created with ID: ${data.id}`);
             res.status(201).json({message: "User created successfully" , data: data});
         }catch{
             res.status(500).json({message: "Internal server error"});
@@ -19,8 +21,11 @@ class userController {
     async updateUser(req,res){
         try{
             const data = await UserModel.updateUser(req.params.id, req.body);
+
+            Logger.info(`User updated with ID: ${req.params.id}`);
             res.status(200).json({message: "User updated successfully", data: data});
         }catch{
+
             res.status(500).json({message: "Internal server error"});
         }
     }

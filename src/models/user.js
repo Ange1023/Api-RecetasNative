@@ -23,7 +23,6 @@ class userModel {
     }
 
     async getOne(filter){
-
         return await User.findOne(filter);
     }
 }
