@@ -1,63 +1,44 @@
-import UserModel from "../models/user.js";
-import Logger from "../utils/logger.js";
+import BaseController from '../utils/BaseController.js';
+import User from '../schemas/user.js';
+import { AppError, catchAsync } from '../utils/AppError.js';
 
-class userController {
-
+class UserController extends BaseController {
     constructor() {
-
+        super(User, {
+            create: {
+                success: "Usuario creado exitosamente",
+                failure: "Error al crear el usuario",
+            },
+            getAll: {
+                success: "Lista de usuarios obtenida exitosamente",
+            },
+            getOne: {
+                success: "Usuario encontrado",
+                failure: "Usuario no encontrado",
+            },
+            update: {
+                success: "Usuario actualizado correctamente",
+                failure: "Error al actualizar el usuario",
+            },
+            delete: {
+                success: "Usuario eliminado correctamente",
+                failure: "Error al eliminar el usuario",
+            },
+        });
     }
 
-    async createUser(req,res){
-        try{
-            const data = await UserModel.createUser(req.body);
-            
-            Logger.info(`User created with ID: ${data.id}`);
-            res.status(201).json({message: "User created successfully" , data: data});
-        }catch{
-            res.status(500).json({message: "Internal server error"});
-        }
+    getAll = catchAsync(async (req, res, next) => {
+        const users = await this.model.find();
+        this.sendResponse(res, 200, "Lista de usuarios encontrada exitosamente", users);
     }
+    );
 
-    async updateUser(req,res){
-        try{
-            const data = await UserModel.updateUser(req.params.id, req.body);
-
-            Logger.info(`User updated with ID: ${req.params.id}`);
-            res.status(200).json({message: "User updated successfully", data: data});
-        }catch{
-
-            res.status(500).json({message: "Internal server error"});
-        }
-    }
-
-    async deleteUser(req,res){
-
-        try{
-            const data = await UserModel.deleteUser(req.params.id);
-            res.status(200).json({message: "User deleted successfully", data: data});
-        }catch{
-            res.status(500).json({message: "Internal server error"});
-        }
-    }
-
-    async getAllUsers(req,res){
-        try{
-            const data = await UserModel.getAllUsers();
-            res.status(200).json({message: "All users retrieved successfully", data: data});
-        }catch{
-            res.status(500).json({message: "Internal server error"});
-        }
-    }
-
-    async getUserById(req,res){
-        try{
-            const data = await UserModel.getUserById(req.params.id);
-            res.status(200).json({message: "User retrieved successfully", data: data});
-        }catch{
-            res.status(500).json({message: "Internal server error"});
-        }
-    }
-    
+    // Sobrescribe getOne si necesitas lógica personalizada
+    getOne = catchAsync(async (req, res, next) => {
+        const user = await this.model.findById(req.params.id);
+        if (!user) throw new AppError("Usuario no encontrado", 404);
+        this.sendResponse(res, 200, "Usuario encontrado", user);
+    });
 }
 
-export default new userController();
+export default new UserController();

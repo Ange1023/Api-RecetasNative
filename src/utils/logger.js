@@ -37,8 +37,7 @@ class Logger {
     const formattedMessage = `[${timestamp}] [${type}] ${message}`;
     console.log(formattedMessage);
     }
-
-
+    
     //Estos son los metodos que se pueden usar para loguear los mensajes segun el nivel
     info(msg)     { this.#log(LogLevel.INFO, msg); }
     warning(msg)  { this.#log(LogLevel.WARNING, msg); }

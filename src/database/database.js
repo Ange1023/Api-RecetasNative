@@ -8,6 +8,7 @@ class database {
     
     async connect() {
         try {
+            moongose.set('strictQuery', true); // Configura strictQuery explícitamente
             await moongose.connect(process.env.MONGODB_URI);
         } catch (error) {
             console.error("Error connecting to database:", error);
@@ -17,7 +18,7 @@ class database {
     async disconnect() {
         try {
             await moongose.disconnect();
-        }catch (error) {
+        } catch (error) {
             console.error("Error disconnecting from database:", error);
         }
     }

@@ -3,20 +3,22 @@ import mongoose from 'mongoose';
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
-        required: true,
+        required: [true, 'Email is required'], 
         unique: true,
+        match: [/.+@.+\..+/, 'Invalid email format'], 
     },
     password: {
         type: String,
-        required: true,
+        required: [true, 'Password is required'], 
+        // minLength: [6, 'Password must be at least 6 characters long'], // El deber ser
     },
     name: {
         type: String,
-        required: true,
+        required: [true, 'Name is required'], 
     },
     lastName: {
         type: String,
-        required: true,
+        required: [true, 'Last Name is required'],
     },
     favoriteGroups: {
         type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Group' }],

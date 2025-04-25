@@ -1,13 +1,19 @@
 import express from 'express';
-import User from '../controllers/User.js';
-import { verifyToken } from '../controllers/authenticacion.js';
+import UserController from '../controllers/user.js';
 
 const router = express.Router();
 
-router.get('/', User.getUserById);
-router.get('/all', User.getAllUsers);
-router.post('/', User.createUser);
-router.put('/:id', verifyToken, User.updateUser);
-router.delete('/:id', User.deleteUser);
+// CRUD Básico (heredado de BaseController)
+router.get('/all',UserController.getAll)    
+router.route('/')
+    .post(UserController.create);  // POST /users
+
+router.route('/:id')
+    .get(UserController.getOne)    // GET /users/:id
+    .patch(UserController.update)  // PATCH /users/:id
+    .delete(UserController.delete); // DELETE /users/:id
+
+    console.log(typeof UserController.getAll);
+    
 
 export default router;

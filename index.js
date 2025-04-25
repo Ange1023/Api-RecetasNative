@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import userRoutes from "./src/routes/user.js";
 import authRoutes from "./src/routes/authentication.js";
 import database from "./src/database/database.js";
+import { errorMiddleware } from "./src/utils/AppError.js";
 dotenv.config();
 
 const app = express();
@@ -15,6 +16,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use("/user", userRoutes);
 app.use("/auth", authRoutes);
+
+// Middleware de errores (si algo falla, pasa a errorMiddleware)
+app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 4000;
 app.listen(PORT, () => {
