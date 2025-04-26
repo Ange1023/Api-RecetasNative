@@ -4,33 +4,48 @@ const recipeSchema = new mongoose.Schema({
     user_id: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
-        required: true,
+        required: [true, 'User ID is required'],
     },
     title: {
         type: String,
         unique: true,
         required: true,
+        minlength: [3, 'Title must be at least 3 characters long'],
+        maxlength: [100, 'Title must not exceed 100 characters'],
     },
     description: {
         type: String,
         required: true,
+        minlength: [10, 'Description must be at least 10 characters long'],
+        maxlength: [500, 'Description must not exceed 500 characters'],
     },
-    steps:{
+    steps: {
         type: Array,
-        required: true,
+        required: [true, 'Steps are required'],
+        validate: {
+            validator: function (steps) {
+                return steps.length > 0;
+            },
+            message: 'At least one step is required',
+        },
     },
     preparation_time: {
         type: Number,
-        required: true,
+        required: [true, 'Preparation time is required'],
+        min: [1, 'Preparation time must be at least 1 minute'],
     },
     servings: {
         type: Number,
-        required: true,
+        required: [true, 'Servings are required'],
+        min: [1, 'Servings must be at least 1'],
     },
     dificulty: {
         type: String,
-        enum: ['easy', 'medium', 'hard'],
-        required: true,
+        enum: {
+            values: ['easy', 'medium', 'hard'],
+            message: 'Difficulty must be either easy, medium, or hard',
+        },
+        required: [true, 'Difficulty is required'],
     },
     isPublic: {
         type: Boolean,
@@ -47,22 +62,69 @@ const recipeSchema = new mongoose.Schema({
         type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Tag'}],
     },
     ingredients: {
-        type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Ingredient'}],
-        required: true,
+        type: [
+            {
+                ingredient_id: {
+                    type: mongoose.Schema.Types.ObjectId,
+                    ref: 'Ingredient',
+                    required: [true, 'Ingredient ID is required'],
+                },
+                ingredient_quantity: {
+                    type: Number,
+                    required: [true, 'Ingredient quantity is required'],
+                    min: [0.1, 'Ingredient quantity must be at least 0.1'],
+                },
+                unit: {
+                    type: String,
+                    enum: {
+                        values: ['g', 'kg', 'ml', 'l', 'tsp', 'tbsp', 'cup', 'oz', 'lb'],
+                        message: 'Unit must be one of g, kg, ml, l, tsp, tbsp, cup, oz, lb',
+                    },
+                },
+                unit_quantity: {
+                    type: Number,
+                    required: [true, 'Unit quantity is required'],
+                    min: [0.1, 'Unit quantity must be at least 0.1'],
+                },
+            }
+        ],
+        required: [true, 'Ingredients are required'],
+        validate: {
+            validator: function (ingredients) {
+                return ingredients.length > 0;
+            },
+            message: 'At least one ingredient is required',
+        },
     },
     categories: {
-        type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Category'}],
-        required: true,
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Category' }],
+        required: [true, 'Categories are required'],
+        validate: {
+            validator: function (categories) {
+                return categories.length > 0;
+            },
+            message: 'At least one category is required',
+        },
+    },
+    users:{
+        type: [{type: mongoose.Schema.Types.ObjectId, ref: 'User'}],
     },
     images: {
-        type: [{
-            url: {
-                type: String,
-                required: true,
+        type: [
+            {
+                url: {
+                    type: String,
+                    required: [true, 'Image URL is required'],
+                    validate: {
+                        validator: function (url) {
+                            return /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/.test(url);
+                        },
+                        message: 'Image URL must be a valid URL ending with jpg, jpeg, png, gif, or webp',
+                    },
+                },
             },
-        }],
-        required: true,
-    }
+        ],
+    },
 
 });
 export default mongoose.model('Recipe', recipeSchema);

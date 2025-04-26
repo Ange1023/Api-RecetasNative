@@ -1,5 +1,5 @@
 import BaseController from '../utils/BaseController.js';
-import User from '../schemas/user.js';
+import User from '../schemas/users.js';
 import { AppError, catchAsync } from '../utils/AppError.js';
 
 class UserController extends BaseController {
