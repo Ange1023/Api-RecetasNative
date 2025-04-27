@@ -24,7 +24,7 @@ const userSchema = new mongoose.Schema({
         minlength: [2, 'Last Name must be at least 2 characters long'], // Longitud mínima
         maxlength: [50, 'Last Name must not exceed 50 characters'], // Longitud máxima
     },
-    CreatedGroups: {
+    createdGroups: {
         type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Group' }],
         validate: {
             validator: function (groups) {
@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
             message: 'CreatedGroups must be an array of Group IDs',
         },
     },
-    FollowedGroups: {
+    followedGroups: {
         type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Group' }],
         validate: {
             validator: function (groups) {

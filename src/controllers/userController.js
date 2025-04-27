@@ -1,0 +1,43 @@
+
+import userService from "../services/userService.js";
+import { catchAsync, sendResponse } from "../utils/AppError.js";
+
+
+class userController {
+    
+    create = catchAsync(async (req, res, next) => {
+        const user = await userService.createUser(req.body);
+        sendResponse(res, 201, "Usuario creado exitosamente", {
+            user,
+        });
+    });
+
+    update = catchAsync(async (req, res, next) => {
+        const user = await userService.updateUser(req.params.id, req.body);
+        sendResponse(res, 200, "Usuario actualizado exitosamente", {
+            user,
+        });
+    });
+
+    delete = catchAsync(async (req, res, next) => {
+        await userService.deleteUser(req.params.id);
+        sendResponse(res, 200, "Usuario eliminado exitosamente", null);
+    });
+
+    getOne = catchAsync(async (req, res, next) => {
+        const user = await userService.getUserById(req.params.id);
+        sendResponse(res, 200, "Usuario encontrado exitosamente", {
+            user,
+        });
+    });
+
+    getAll = catchAsync(async (req, res, next) => {
+        const users = await userService.getAllUsers();
+        sendResponse(res, 200, "Usuarios encontrados exitosamente", {
+            users,
+        });
+    });
+    
+}
+
+export default new userController();

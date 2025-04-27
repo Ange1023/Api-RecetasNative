@@ -1,5 +1,6 @@
 import express from 'express';
-import UserController from '../controllers/User.js';
+import UserController from '../controllers/userController.js';
+import { verifyToken } from '../services/authService.js';
 
 const router = express.Router();
 
@@ -8,12 +9,9 @@ router.get('/all',UserController.getAll)
 router.route('/')
     .post(UserController.create);  // POST /users
 
-router.route('/:id')
+router.route('/:id', verifyToken) // Middleware de autenticación
     .get(UserController.getOne)    // GET /users/:id
-    .patch(UserController.update)  // PATCH /users/:id
+    .put(UserController.update)  // PATCH /users/:id
     .delete(UserController.delete); // DELETE /users/:id
-
-    console.log(typeof UserController.getAll);
-    
 
 export default router;

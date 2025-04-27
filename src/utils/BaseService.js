@@ -1,6 +1,6 @@
 import { AppError, catchAsync } from "./AppError.js";
 
-export default class BaseController {
+export default class BaseService {
     constructor(model, messages = {}) {
         this.model = model; // Modelo de Mongoose
         this.messages = messages; // Mensajes personalizados
@@ -97,7 +97,7 @@ export default class BaseController {
     // Método para respuestas consistentes
     sendResponse(res, statusCode, message, data = null) {
         res.status(statusCode).json({
-            success: true,
+            success: String(statusCode).startsWith('2'),
             message,
             data,
         });

@@ -1,3 +1,5 @@
+import Logger from "./Logger.js";
+
 export class AppError extends Error {
     constructor(message, statusCode = 500, details = null) {
         super(message);
@@ -10,6 +12,7 @@ export class AppError extends Error {
 }
 
 export const errorMiddleware = (err, req, res, next) => {
+
     err.statusCode = err.statusCode || 500;
 
     const response = {
@@ -17,10 +20,10 @@ export const errorMiddleware = (err, req, res, next) => {
         message: err.message || 'Error interno del servidor',
     };
 
-        response.stack = err.stack; // Solo en desarrollo
+        // response.stack = err.stack; // Solo en desarrollo
         response.details = err.details || null;
     
-
+    Logger.error(`Error: ${err.stack}`); 
     res.status(err.statusCode).json(response);
 };
 
@@ -28,3 +31,12 @@ export const catchAsync = (fn) => (req, res, next) => {
     fn(req, res, next).catch(next); // Atrapa errores y los pasa a errorMiddleware
 };
 
+
+export const sendResponse = (res, statusCode, message, data = null)=> {
+    Logger.info(`Response: ${statusCode} - ${message}`); // Log de respuesta
+    res.status(statusCode).json({
+        success: String(statusCode).startsWith('2'),
+        message,
+        data,
+    });
+}
