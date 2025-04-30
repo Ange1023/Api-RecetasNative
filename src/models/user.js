@@ -1,14 +1,19 @@
 import User from '../Schemas/User.js';
 import mongoose from 'mongoose';
+import BaseModel from '../utils/BaseModel.js';
 
-class userModel {
-
+class userModel extends BaseModel {
+    
+    constructor() {
+        super(User);
+    }
+    
     async createUser(userData) {
         return await User.create(userData);
     }
 
     async updateUser(userId, userData) {
-        return await User.findOneAndUpdate({ _id: new mongoose.Types.ObjectId(userId) }, userData, { new: true });
+        return await User.findOneAndUpdate({ _id: new mongoose.Types.ObjectId(userId) }, userData, { new: true, runValidators: true });
     }
 
     async deleteUser(userId) {
@@ -25,5 +30,6 @@ class userModel {
     async getOne(filter){
         return await User.findOne(filter);
     }
+
 }
 export default new userModel();
