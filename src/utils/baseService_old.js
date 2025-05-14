@@ -1,3 +1,4 @@
+
 import { AppError, catchAsync } from "./appError.js";
 
 export default class BaseService {
