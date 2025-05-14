@@ -1,6 +1,6 @@
 
 import userService from "../services/userService.js";
-import { catchAsync, sendResponse } from "../utils/AppError.js";
+import { catchAsync, sendResponse } from "../utils/appError.js";
 
 
 class userController {
