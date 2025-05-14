@@ -7,6 +7,7 @@ import authRoutes from "./src/routes/authRoutes.js";
 import database from "./src/database/database.js";
 import { errorMiddleware } from "./src/utils/AppError.js";
 dotenv.config();
+console.log(process.env.API_RECETAS_NATIVE_MONGODB_URI);
 
 const app = express();
 

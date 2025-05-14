@@ -49,7 +49,8 @@ class authService {
         });
         
         if (!data) throw new AppError("User creation failed", 500);
-
+        console.log(data);
+        
         return data;
     }
 
