@@ -5,7 +5,7 @@ import bodyParser from "body-parser";
 import userRoutes from "./src/routes/userRoutes.js";
 import authRoutes from "./src/routes/authRoutes.js";
 import database from "./src/database/database.js";
-import { errorMiddleware } from "./src/utils/AppError.js";
+import { errorMiddleware } from "./src/utils/appError.js";
 dotenv.config();
 
 const app = express();
