@@ -1,4 +1,4 @@
-import { AppError, catchAsync } from "./AppError.js";
+import { AppError, catchAsync } from "./appError.js";
 
 export default class BaseService {
     constructor(model, messages = {}) {

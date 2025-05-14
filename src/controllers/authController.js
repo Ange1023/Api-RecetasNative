@@ -1,5 +1,5 @@
 import authService from "../services/authService.js";
-import { catchAsync, sendResponse } from "../utils/AppError.js";
+import { catchAsync, sendResponse } from "../utils/appError.js";
 
 class authController  {
 

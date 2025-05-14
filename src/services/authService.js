@@ -1,5 +1,5 @@
 import UserModel from "../models/user.js";
-import { AppError } from "../utils/AppError.js";
+import { AppError } from "../utils/appError.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import 'dotenv/config';
@@ -14,7 +14,7 @@ export function generateToken(payload){
 
     return token;
 
-}
+};
 
 export function verifyToken(req, res, next){
 
@@ -49,7 +49,6 @@ class authService {
         });
         
         if (!data) throw new AppError("User creation failed", 500);
-        console.log(data);
         
         return data;
     }

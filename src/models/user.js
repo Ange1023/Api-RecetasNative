@@ -1,6 +1,6 @@
 import User from '../Schemas/user.js';
 import mongoose from 'mongoose';
-import BaseModel from '../utils/BaseModel.js';
+import BaseModel from '../utils/baseModel.js';
 
 class userModel extends BaseModel {
     
