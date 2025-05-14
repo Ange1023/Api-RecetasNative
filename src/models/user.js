@@ -1,4 +1,4 @@
-import User from '../Schemas/User.js';
+import User from '../Schemas/user.js';
 import mongoose from 'mongoose';
 
 class userModel {
