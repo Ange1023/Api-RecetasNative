@@ -1,4 +1,3 @@
-
 import UserModel from "../models/user.js";
 import authService from "./authService.js";
 

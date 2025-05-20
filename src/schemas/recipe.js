@@ -30,9 +30,15 @@ const recipeSchema = new mongoose.Schema({
         },
     },
     preparation_time: {
-        type: Number,
+        type: String, // ISO 8601 duration
         required: [true, 'Preparation time is required'],
-        min: [1, 'Preparation time must be at least 1 minute'],
+        validate: {
+            validator: function (v) {
+                // Validar formato ISO 8601 de duración
+                return /^P(?!$)(\d+Y)?(\d+M)?(\d+D)?(T(\d+H)?(\d+M)?(\d+S)?)?$/.test(v);
+            },
+            message: 'Preparation time must be a valid ISO 8601 duration string',
+        },
     },
     servings: {
         type: Number,

@@ -12,18 +12,30 @@ export class AppError extends Error {
 }
 
 export const errorMiddleware = (err, req, res, next) => {
+    // Manejo de error de clave duplicada de Mongoose
+    if (err.code === 11000) {
+        const field = Object.keys(err.keyValue)[0];
+        err.statusCode = 400;
+        err.message = `El valor '${err.keyValue[field]}' ya existe para el campo '${field}'.`;
+        err.details = null;
+    }
+
+    // Manejo de error de validación de Mongoose
+    if (err.name === "ValidationError") {
+        err.statusCode = 400;
+        err.message = Object.values(err.errors).map(e => e.message).join(" ");
+        err.details = null;
+    }
 
     err.statusCode = err.statusCode || 500;
 
     const response = {
         success: false,
         message: err.message || 'Error interno del servidor',
+        details: err.details || null,
     };
 
-        // response.stack = err.stack; // Solo en desarrollo
-        response.details = err.details || null;
-    
-    Logger.error(`Error: ${err.stack}`); 
+    Logger.error(`Error: ${err.stack}`);
     res.status(err.statusCode).json(response);
 };
 
