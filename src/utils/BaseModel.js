@@ -33,18 +33,18 @@ export default class BaseModel {
         return await this.model.findOne(filter);
     }
 
-    async paginate(filter = {}, options = { page: 1, limit: 10 }) { // paginacion clara y sencilla
-        const { page, limit } = options;
-        const skip = (page - 1) * limit;
+    async paginate(filter = {}, options = { currentPage: 1, limit: 10 }) { // paginacion clara y sencilla
+        const { currentPage, limit } = options;
+        const skip = (currentPage - 1) * limit;
 
         const data = await this.model.find(filter).skip(skip).limit(limit);
-        const total = await this.model.countDocuments(filter);
+        const totalItems = await this.model.countDocuments(filter);
 
         return {
             data,
-            total,
-            page,
-            pages: Math.ceil(total / limit),
+            totalItems,
+            currentPage,
+            totalPages: Math.ceil(totalItems / limit),
         };
     }
 }
