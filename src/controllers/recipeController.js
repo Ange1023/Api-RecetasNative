@@ -11,6 +11,9 @@ class RecipeController {
 
     update = catchAsync(async (req, res, next) => {
         const recipe = await RecipeService.updateRecipe(req.params.id, req.body);
+        if(!recipe) {
+            return sendResponse(res, 404, 'Receta no encontrada', null);
+        }
         sendResponse(res, 200, 'Receta actualizada exitosamente', {
             recipe,
         });
@@ -18,6 +21,9 @@ class RecipeController {
 
     delete = catchAsync(async (req, res, next) => {
         await RecipeService.deleteRecipe(req.params.id);
+        if(!recipe) {
+            return sendResponse(res, 404, 'Receta no encontrada', null);
+        }
         sendResponse(res, 200, 'Receta eliminada exitosamente', null);
     });
 

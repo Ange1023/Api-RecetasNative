@@ -12,6 +12,9 @@ class userController {
 
     update = catchAsync(async (req, res, next) => {
         const user = await userService.updateUser(req.params.id, req.body);
+        if (!user) {
+            return sendResponse(res, 404, "Usuario no encontrado", null);
+        }
         sendResponse(res, 200, "Usuario actualizado exitosamente", {
             user,
         });
@@ -19,6 +22,9 @@ class userController {
 
     delete = catchAsync(async (req, res, next) => {
         await userService.deleteUser(req.params.id);
+        if (!user) {
+            return sendResponse(res, 404, "Usuario no encontrado", null);
+        }
         sendResponse(res, 200, "Usuario eliminado exitosamente", null);
     });
 
