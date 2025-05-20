@@ -40,6 +40,15 @@ class RecipeController {
             recipes,
         });
     });
+
+    getPaginated = catchAsync(async (req, res, next) => {
+        const { currentPage = 1, limit = 10, ...filters } = req.body;
+        // Puedes construir un filtro más avanzado aquí si lo necesitas
+        const options = { currentPage: parseInt(currentPage), limit: parseInt(limit) };
+        const result = await RecipeService.paginateRecipes(filters, options);
+        sendResponse(res, 200, 'Recetas paginadas', result);
+    });
+
 }
 
 export default new RecipeController();

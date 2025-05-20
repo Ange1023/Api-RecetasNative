@@ -57,6 +57,11 @@ class RecipeService {
         return data;
     }
 
+    async paginateRecipes(filter = {}, options = { currentPage: 1, limit: 10 }) {
+        const data = await recipeModel.paginate(filter, options);
+        return data;
+    }
+
 }
 
 export default new RecipeService();
