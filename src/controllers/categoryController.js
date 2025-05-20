@@ -1,5 +1,5 @@
 import CategoryService from '../services/categoryService.js';
-import { catchAsync, sendResponse } from '../utils/AppError.js';
+import { catchAsync, sendResponse } from '../utils/appError.js';
 
 class CategoryController {
     create = catchAsync(async (req, res, next) => {

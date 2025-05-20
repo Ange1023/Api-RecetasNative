@@ -1,6 +1,6 @@
 import recipe from "../schemas/recipe.js";
 import mongoose from "mongoose";
-import Basemodel from "../utils/BaseModel.js";
+import Basemodel from "../utils/baseModel.js";
 
 class recipeModel extends Basemodel {
     constructor() {

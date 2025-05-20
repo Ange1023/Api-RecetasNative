@@ -1,5 +1,5 @@
 import UserModel from "../models/user.js";
-import { AppError } from "../utils/AppError.js";
+import { AppError } from "../utils/appError.js";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import 'dotenv/config';

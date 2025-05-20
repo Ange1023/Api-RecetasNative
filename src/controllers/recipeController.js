@@ -1,5 +1,5 @@
 import RecipeService from '../services/recipeService.js';
-import { catchAsync, sendResponse } from '../utils/AppError.js';
+import { catchAsync, sendResponse } from '../utils/appError.js';
 
 class RecipeController {
     create = catchAsync(async (req, res, next) => {

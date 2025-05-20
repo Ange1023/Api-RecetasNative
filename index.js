@@ -7,7 +7,7 @@ import authRoutes from "./src/routes/authRoutes.js";
 import recipeRoutes from "./src/routes/recipeRoutes.js";
 import categoryRoutes from "./src/routes/categoryRoutes.js";
 import database from "./src/database/database.js";
-import { errorMiddleware } from "./src/utils/AppError.js";
+import { errorMiddleware } from "./src/utils/appError.js";
 dotenv.config();
 console.log(process.env.API_RECETAS_NATIVE_MONGODB_URI);
 
