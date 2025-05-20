@@ -5,6 +5,7 @@ import bodyParser from "body-parser";
 import userRoutes from "./src/routes/userRoutes.js";
 import authRoutes from "./src/routes/authRoutes.js";
 import recipeRoutes from "./src/routes/recipeRoutes.js";
+import categoryRoutes from "./src/routes/categoryRoutes.js";
 import database from "./src/database/database.js";
 import { errorMiddleware } from "./src/utils/AppError.js";
 dotenv.config();
@@ -19,6 +20,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/user", userRoutes);
 app.use("/auth", authRoutes);
 app.use("/recipe", recipeRoutes);
+app.use("/categories",categoryRoutes)
 
 // Middleware de errores (si algo falla, pasa a errorMiddleware)
 app.use(errorMiddleware);
