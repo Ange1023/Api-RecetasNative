@@ -27,6 +27,12 @@ export const errorMiddleware = (err, req, res, next) => {
         err.details = null;
     }
 
+    if (err.name === "CastError") {
+        err.statusCode = 400;
+        err.message = `El ID '${err.value}' no es válido. debe ser un ObjectId. de 24 caracteres`;
+        err.details = null;
+    }
+
     err.statusCode = err.statusCode || 500;
 
     const response = {

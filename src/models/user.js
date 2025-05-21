@@ -16,6 +16,10 @@ class userModel extends BaseModel {
         return await User.findOneAndUpdate({ _id: new mongoose.Types.ObjectId(userId) }, userData, { new: true, runValidators: true });
     }
 
+    async softDeleteUser(userId) {
+        return await User.findOneAndUpdate({ _id: new mongoose.Types.ObjectId(userId) }, { deletedAt: new Date() }, { new: true });
+    }
+
     async deleteUser(userId) {
         return await User.findOneAndDelete({_id: new mongoose.Types.ObjectId(userId)  });
     }

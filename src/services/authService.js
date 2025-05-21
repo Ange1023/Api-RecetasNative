@@ -65,6 +65,8 @@ class authService {
 
         if (!isPasswordValid) throw new AppError("Invalid password", 401);
 
+        if(user.deletedAt) throw new AppError("This user is deleted has account, if you want to recover it, please contact us", 401);
+        
         const token = generateToken({ email: user.email });
 
         if (!token) throw new AppError("Token generation failed", 500);
