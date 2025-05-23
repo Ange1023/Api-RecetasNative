@@ -62,6 +62,11 @@ class RecipeService {
         return data;
     }
 
+    async rateRecipe(recipeId, user_id, rating) {
+        const data = await recipeModel.rate(recipeId, user_id, rating);
+        return data;
+    }
+
 }
 
 export default new RecipeService();

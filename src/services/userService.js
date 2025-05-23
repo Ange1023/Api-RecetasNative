@@ -40,7 +40,6 @@ class UserService {
     }
 
     async getUserById(userId) {
-
         const data = await UserModel.getUserById(userId);
 
         if (!data) throw new AppError("User not found", 404, null);

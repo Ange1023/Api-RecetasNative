@@ -132,5 +132,31 @@ const recipeSchema = new mongoose.Schema({
         ],
     },
 
+    ratings: [
+        {
+            user_id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'User',
+                required: true
+            },
+            value: {
+                type: Number,
+                required: true,
+                min: 1,
+                max: 5
+            }
+        }
+    ],
+
+});
+
+recipeSchema.virtual('averageRating').get(function () {
+    if (this.ratings.length === 0) return 0;
+    const total = this.ratings.reduce((acc, rating) => acc + rating.value, 0);
+    return total / this.ratings.length;
+});
+
+recipeSchema.set('toJSON', {
+    virtuals: true,
 });
 export default mongoose.model('Recipe', recipeSchema);
