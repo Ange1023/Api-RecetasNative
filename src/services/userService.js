@@ -29,7 +29,6 @@ class UserService {
     }
 
     async getUserById(userId) {
-
         const data = await UserModel.getUserById(userId);
         return data;
     }

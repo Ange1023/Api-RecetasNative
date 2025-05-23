@@ -49,6 +49,17 @@ class RecipeController {
         sendResponse(res, 200, 'Recetas paginadas', result);
     });
 
+    rateRecipe = catchAsync(async (req, res, next) => {
+        const { recipeId, user_id, value } = req.body;
+        const recipe = await RecipeService.rateRecipe(recipeId, user_id, value);
+        if(!recipe) {
+            return sendResponse(res, 404, 'Receta no encontrada', null);
+        }
+        sendResponse(res, 200, 'Receta valorada exitosamente', {
+            recipe,
+        });
+    });
+
 }
 
 export default new RecipeController();
