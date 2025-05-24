@@ -64,9 +64,6 @@ const recipeSchema = new mongoose.Schema({
     groups:{
         type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Group'}],
     },
-    tags:{
-        type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Tag'}],
-    },
     ingredients: {
         type: [
             {
