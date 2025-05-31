@@ -24,7 +24,7 @@ class UserService {
 
     async deleteUser(userId) {
 
-        const data = await UserModel.deleteUser(userId);
+        const data = await UserModel.softDeleteUser(userId);
         return data;
     }
 
