@@ -32,10 +32,7 @@ class UserService {
 
     async deleteUser(userId) {
 
-        const data = await UserModel.deleteUser(userId);
-
-        if (!data) throw new AppError("User not found", 404, null);
-
+        const data = await UserModel.softDeleteUser(userId);
         return data;
     }
 
