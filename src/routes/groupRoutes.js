@@ -11,7 +11,7 @@ const router = express.Router();
 
 router.get("/all", GroupController.getAll);
 router.post("/", GroupController.create);
-router.get("/paginate", GroupController.getPaginated);
+router.post("/paginate", GroupController.getPaginated);
 router.post("/toggleMember", GroupController.toggleMember);
 router.delete("/softDelete/:id", GroupController.softDelete);
 
