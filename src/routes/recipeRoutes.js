@@ -9,7 +9,7 @@ const router = express.Router();
 
 // CRUD Básico (heredado de BaseController)
 router.get("/all", RecipeController.getAll);
-router.get("/paginated", RecipeController.getPaginated);
+router.post("/paginated", RecipeController.getPaginated);
 router.post("/rate", RecipeController.rateRecipe); // POST /recipes/rate
 router.route("/").post(RecipeController.create); // POST /recipes
 router

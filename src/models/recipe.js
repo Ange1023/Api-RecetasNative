@@ -9,7 +9,7 @@ class recipeModel extends Basemodel {
 
     async rate(recipeId, user_id, value) {
         // Primero verifica si el usuario ya ha valorado esta receta
-        
+
         const existingRecipe = await recipe.findOne({
             _id: recipeId,
             "ratings.user_id": user_id
