@@ -20,11 +20,11 @@ class RecipeController {
     });
 
     delete = catchAsync(async (req, res, next) => {
-        await RecipeService.deleteRecipe(req.params.id);
-        if(!recipe) {
-            return sendResponse(res, 404, 'Receta no encontrada', null);
+        const recipe = await RecipeService.deleteRecipe(req.params.id);
+        if(recipe) {
+            sendResponse(res, 200, 'Receta eliminada exitosamente', null);
         }
-        sendResponse(res, 200, 'Receta eliminada exitosamente', null);
+        return sendResponse(res, 404, 'Receta no encontrada', null);
     });
 
     getOne = catchAsync(async (req, res, next) => {
