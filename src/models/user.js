@@ -35,5 +35,24 @@ class userModel extends BaseModel {
         return await User.findOne(filter);
     }
 
+    async toggleFavoriteRecipe(userId, recipeId) {
+        const user = await User.findById(userId);
+        if (!user) return null;
+
+        const recipeObjId = new mongoose.Types.ObjectId(recipeId);
+        const isFavorite = user.favoriteRecipes.some(id => id.equals(recipeObjId));
+
+        // Si ya es favorita, la elimina; si no, la agrega
+        const update = isFavorite
+            ? { $pull: { favoriteRecipes: recipeObjId } }
+            : { $addToSet: { favoriteRecipes: recipeObjId } };
+
+        return await User.findByIdAndUpdate(
+            userId,
+            update,
+            { new: true }
+        );
+    }
+
 }
 export default new userModel();

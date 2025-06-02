@@ -5,7 +5,8 @@ import { verifyToken } from '../services/authService.js';
 const router = express.Router();
 
 // CRUD Básico (heredado de BaseController)
-router.get('/all',UserController.getAll)    
+router.get('/all',UserController.getAll)
+router.post('/favorite', UserController.toggleFavorite); // POST /users/favorite 
 router.route('/')
     .post(UserController.create);  // POST /users
 

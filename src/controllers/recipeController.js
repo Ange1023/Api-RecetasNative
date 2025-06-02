@@ -1,3 +1,4 @@
+import user from '../schemas/user.js';
 import RecipeService from '../services/recipeService.js';
 import { catchAsync, sendResponse } from '../utils/appError.js';
 
@@ -42,9 +43,9 @@ class RecipeController {
     });
 
     getPaginated = catchAsync(async (req, res, next) => {
-        const { currentPage = 1, limit = 10, ...filters } = req.body;
+        const { currentPage = 1, limit = 10, user_id = null, ...filters } = req.body;  
         // Puedes construir un filtro más avanzado aquí si lo necesitas
-        const options = { currentPage: parseInt(currentPage), limit: parseInt(limit) };
+        const options = { currentPage: parseInt(currentPage), limit: parseInt(limit), user_id: user_id ? user_id : null };
         const result = await RecipeService.paginateRecipes(filters, options);
         sendResponse(res, 200, 'Recetas paginadas', result);
     });

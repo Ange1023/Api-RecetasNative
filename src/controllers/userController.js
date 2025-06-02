@@ -41,6 +41,17 @@ class userController {
             users,
         });
     });
+
+    toggleFavorite = catchAsync(async (req, res, next) => {
+        const { recipeId, user_id } = req.body;
+        const user = await userService.toggleFavorite(user_id, recipeId);
+        if (!user) {
+            return sendResponse(res, 404, "Usuario no encontrado", null);
+        }
+        sendResponse(res, 200, "Receta actualizada en favoritos exitosamente", {
+            user,
+        });
+    });
     
 }
 
