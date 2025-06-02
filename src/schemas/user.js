@@ -7,6 +7,15 @@ const userSchema = new mongoose.Schema({
         unique: true,
         match: [/.+@.+\..+/, 'Invalid email format'], 
     },
+    profileImage: {
+        type: String,
+        validate: {
+            validator: function (url) {
+                return /^https?:\/\/.+\.(jpg|jpeg|png|gif)$/.test(url); // Validación de URL de imagen
+            },
+            message: 'ProfileImage must be a valid URL ending with .jpg, .jpeg, .png, or .gif',
+        },
+    },
     password: {
         type: String,
         required: [true, 'Password is required'], 

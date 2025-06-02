@@ -4,7 +4,7 @@ import authService from "./authService.js";
 
 class UserService {
 
-    async createUser({ email, password, name, lastName, createdGroups, followedGroups, favoriteRecipes }) {
+    async createUser({ email, password, name, lastName, createdGroups, followedGroups, favoriteRecipes, profileImage }) {
         
         const data = await authService.signUp({
             email,
@@ -13,7 +13,8 @@ class UserService {
             lastName,
             createdGroups,
             followedGroups,
-            favoriteRecipes
+            favoriteRecipes,
+            profileImage
         });
 
         if (!data) throw new AppError(400, "Error al crear el usuario", "UserService", "createUser");
@@ -38,7 +39,6 @@ class UserService {
 
     async getUserById(userId) {
         const data = await UserModel.getUserById(userId);
-
         if (!data) throw new AppError("User not found", 404, null);
 
         return data;

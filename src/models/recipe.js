@@ -32,6 +32,28 @@ class recipeModel extends Basemodel {
         }
     }
 
+    async paginate(filter = {}, options = { currentPage: 1, limit: 10 }) {
+        // Implementación de paginación
+        const { currentPage, limit } = options;
+        const skip = (currentPage - 1) * limit;
+
+        const totalCount = await this.model.countDocuments(filter);
+        const totalPages = Math.ceil(totalCount / limit);
+
+        const data = await this.model.find(filter)
+            .skip(skip)
+            .limit(limit)
+            .populate('user_id', 'name profileImage lastName') // Población de datos del usuario
+
+        return {
+            data,
+            totalCount,
+            totalPages,
+            currentPage,
+            limit
+        };
+    }
+
     // Las operaciones CRUD están en BaseModel
 }
 
