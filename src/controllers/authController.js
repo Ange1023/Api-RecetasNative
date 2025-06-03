@@ -14,10 +14,8 @@ class authController  {
 
     signIn = catchAsync(async (req, res, next) => {
 
-        const token = await authService.signIn(req.body);
-        sendResponse(res, 200, "Usuario autenticado exitosamente", {
-            token,
-        });
+        const data = await authService.signIn(req.body);
+        sendResponse(res, 200, "Usuario autenticado exitosamente", data);
         
     });
 

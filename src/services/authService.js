@@ -72,7 +72,7 @@ class authService {
 
         if (!token) throw new AppError("Token generation failed", 500);
         
-        return token;
+        return {token, userId: String(user._id)};
 
     }
 
