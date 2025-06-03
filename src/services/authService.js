@@ -72,7 +72,11 @@ class authService {
 
         if (!token) throw new AppError("Token generation failed", 500);
         
-        return {token, userId: String(user._id)};
+        const userId = String(user._id);
+
+        if (!userId) throw new AppError("User ID not found", 500);
+
+        return {token, userId};
 
     }
 
