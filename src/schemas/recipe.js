@@ -20,7 +20,25 @@ const recipeSchema = new mongoose.Schema({
         maxlength: [500, 'Description must not exceed 500 characters'],
     },
     steps: {
-        type: Array,
+        type: [
+            {
+                description: {
+                    type: String,
+                    required: [true, 'Step description is required'],
+                    minlength: [50, 'Step description must be at least 5 characters long'],
+                    maxlength: [500, 'Step description must not exceed 500 characters'],
+                },
+                stepImage: {
+                    type: String,
+                    validate: {
+                        validator: function (url) {
+                            return /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/.test(url);
+                        },
+                        message: 'Step image URL must be a valid URL ending with jpg, jpeg, png, gif, or webp',
+                    },
+                },
+            }
+        ],
         required: [true, 'Steps are required'],
         validate: {
             validator: function (steps) {
@@ -45,7 +63,7 @@ const recipeSchema = new mongoose.Schema({
         required: [true, 'Servings are required'],
         min: [1, 'Servings must be at least 1'],
     },
-    dificulty: {
+    difficulty: {
         type: String,
         enum: {
             values: ['easy', 'medium', 'hard'],
@@ -55,7 +73,7 @@ const recipeSchema = new mongoose.Schema({
     },
     isPublic: {
         type: Boolean,
-        default: true,
+        required: [true, 'Public visibility is required'],
     },
     createdAt: {
         type: Date,
@@ -63,19 +81,15 @@ const recipeSchema = new mongoose.Schema({
     },
     groups:{
         type: [{type: mongoose.Schema.Types.ObjectId, ref: 'Group'}],
+        default: [],
     },
     ingredients: {
         type: [
             {
-                ingredient_id: {
-                    type: mongoose.Schema.Types.ObjectId,
+                ingredient_name: {
+                    type: String,
                     ref: 'Ingredient',
-                    required: [true, 'Ingredient ID is required'],
-                },
-                ingredient_quantity: {
-                    type: Number,
-                    required: [true, 'Ingredient quantity is required'],
-                    min: [0.1, 'Ingredient quantity must be at least 0.1'],
+                    required: [true, 'Ingredient name is required'],
                 },
                 unit: {
                     type: String,
