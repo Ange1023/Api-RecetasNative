@@ -71,12 +71,8 @@ class authService {
         const token = generateToken({ email: user.email });
 
         if (!token) throw new AppError("Token generation failed", 500);
-        
-        const userId = String(user._id);
 
-        if (!userId) throw new AppError("User ID not found", 500);
-
-        return {token, userId};
+        return {token, userId: user._id };
 
     }
 
