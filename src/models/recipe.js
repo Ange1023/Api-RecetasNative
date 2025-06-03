@@ -32,8 +32,8 @@ class recipeModel extends Basemodel {
         }
     }
 
-    async paginate(filter = {}, options = { currentPage: 1, limit: 10, user_id: null }) {
-        const { currentPage, limit, user_id } = options;
+    async paginate(filter = {}, options = { currentPage: 1, limit: 10, viewer_id: null }) {
+        const { currentPage, limit, viewer_id } = options;
         const skip = (currentPage - 1) * limit;
 
         // 1. Obtener recetas paginadas
@@ -45,10 +45,10 @@ class recipeModel extends Basemodel {
             .limit(limit)
             .populate('user_id', 'name profileImage lastName');
 
-        // 2. Si se pasa user_id, obtener favoritos y marcar cada receta
-        if (user_id) {
+        // 2. Si se pasa viewer_id, obtener favoritos y marcar cada receta
+        if (viewer_id) {
             const User = (await import('../schemas/user.js')).default;
-            const user = await User.findById(user_id).select('favoriteRecipes');
+            const user = await User.findById(viewer_id).select('favoriteRecipes');
             const favSet = new Set((user?.favoriteRecipes || []).map(id => id.toString()));
             data = data.map(recipe => ({
                 ...recipe.toObject({virtuals: true}),

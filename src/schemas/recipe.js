@@ -72,11 +72,6 @@ const recipeSchema = new mongoose.Schema({
                     ref: 'Ingredient',
                     required: [true, 'Ingredient ID is required'],
                 },
-                ingredient_quantity: {
-                    type: Number,
-                    required: [true, 'Ingredient quantity is required'],
-                    min: [0.1, 'Ingredient quantity must be at least 0.1'],
-                },
                 unit: {
                     type: String,
                     enum: {
