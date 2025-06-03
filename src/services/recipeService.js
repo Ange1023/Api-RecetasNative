@@ -8,7 +8,7 @@ class RecipeService {
         steps,
         preparation_time,
         servings,
-        dificulty,
+        difficulty,
         isPublic,
         ingredients,
         categories,
@@ -23,7 +23,7 @@ class RecipeService {
             steps,
             preparation_time,
             servings,
-            dificulty,
+            difficulty,
             isPublic,
             ingredients,
             categories,
@@ -55,8 +55,8 @@ class RecipeService {
         return data;
     }
 
-    async paginateRecipes(filter = {}, options = { currentPage: 1, limit: 10, user_id: null }) {
-        console.log(options.user_id);
+    async paginateRecipes(filter = {}, options = { currentPage: 1, limit: 10, viewer_id: null }) {
+        console.log(options.viewer_id);
         
         const data = await recipeModel.paginate(filter, options);
         return data;
