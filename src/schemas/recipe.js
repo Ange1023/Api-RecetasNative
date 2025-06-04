@@ -94,8 +94,8 @@ const recipeSchema = new mongoose.Schema({
                 unit: {
                     type: String,
                     enum: {
-                        values: ['g', 'kg', 'ml', 'l', 'tsp', 'tbsp', 'cup', 'oz', 'lb'],
-                        message: 'Unit must be one of g, kg, ml, l, tsp, tbsp, cup, oz, lb',
+                        values: ['g', 'kg', 'ml', 'l', 'tsp', 'tbsp', 'cup', 'oz', 'lb','unit'],
+                        message: 'Unit must be one of g, kg, ml, l, tsp, tbsp, cup, oz, lb, unit',
                     },
                 },
                 unit_quantity: {

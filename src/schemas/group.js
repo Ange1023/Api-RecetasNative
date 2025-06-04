@@ -48,7 +48,7 @@ const groupSchema = new mongoose.Schema({
         type: Boolean,
         default: false, 
     },
-    GroupMembers: {
+    groupMembers: {
         type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
         validate: {
             validator: function (members) {
@@ -57,6 +57,15 @@ const groupSchema = new mongoose.Schema({
             message: 'GroupMembers must be an array of User IDs',
         },
     },
+    recipes:{
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }],
+        validate: {
+            validator: function (recipes) {
+                return Array.isArray(recipes);
+            },
+            message: 'Recipes must be an array of Recipe IDs',
+        },
+    }
 });
 
 export default mongoose.model('Group', groupSchema);
