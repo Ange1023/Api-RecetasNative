@@ -56,6 +56,7 @@ const groupSchema = new mongoose.Schema({
             },
             message: 'GroupMembers must be an array of User IDs',
         },
+        default: [],
     },
     recipes:{
         type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Recipe' }],
@@ -65,6 +66,7 @@ const groupSchema = new mongoose.Schema({
             },
             message: 'Recipes must be an array of Recipe IDs',
         },
+        default: [],
     }
 });
 
