@@ -17,21 +17,21 @@ class groupModel extends BaseModel {
         if (!groupDoc) return null;
 
         // Verifica si el usuario ya es miembro
-        const isMember = groupDoc.GroupMembers.includes(userId);
+        const isMember = groupDoc.groupMembers.includes(userId);
 
         let updatedGroup;
         if (isMember) {
             // Si ya es miembro, lo quita
             updatedGroup = await group.findOneAndUpdate(
                 { _id: groupId },
-                { $pull: { GroupMembers: userId } },
+                { $pull: { groupMembers: userId } },
                 { new: true }
             );
         } else {
             // Si no es miembro, lo agrega
             updatedGroup = await group.findOneAndUpdate(
                 { _id: groupId },
-                { $addToSet: { GroupMembers: userId } },
+                { $addToSet: { groupMembers: userId } },
                 { new: true }
             );
         }
