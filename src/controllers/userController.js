@@ -52,6 +52,28 @@ class userController {
             user,
         });
     });
+
+    toggleFollowUser = catchAsync(async (req, res, next) => {
+        const { target_user_id,current_user_id } = req.body;
+
+        const user = await userService.toggleFollowUser(current_user_id, target_user_id);
+        if (!user) {
+            return sendResponse(res, 404, "Usuario no encontrado", null);
+        }
+        sendResponse(res, 200, "Usuario seguido/desseguido exitosamente", {
+            user,
+        });
+    });
+
+    getProfile = catchAsync(async (req, res, next) => {
+        const user = await userService.getProfile(req.params.id);
+        if (!user) {
+            return sendResponse(res, 404, "Usuario no encontrado", null);
+        }
+        sendResponse(res, 200, "Perfil de usuario encontrado exitosamente", {
+            user,
+        });
+    });
     
 }
 
