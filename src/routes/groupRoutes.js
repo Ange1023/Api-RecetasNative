@@ -14,6 +14,8 @@ router.post("/", GroupController.create);
 router.post("/paginate", GroupController.getPaginated);
 router.post("/toggleMember", GroupController.toggleMember);
 router.delete("/softDelete/:id", GroupController.softDelete);
+router.put("/addRecipe/:id", GroupController.addRecipeToGroup);
+router.put("/removeRecipe/:id", GroupController.removeRecipeFromGroup);
 
 router.route("/:id")
     .delete(GroupController.delete)

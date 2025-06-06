@@ -72,6 +72,52 @@ class GroupController {
         });
     });
 
+    addRecipeToGroup = catchAsync(async (req, res, next) => {
+        const  groupId  = req.params.id;
+        const { recipeId } = req.body;
+        
+        const result = await GroupService.addRecipeToGroup(groupId, recipeId);
+        
+        if (!result || !result.updatedGroup) {
+            
+            return sendResponse(res, 404, "Grupo no encontrado", null);
+        }
+        const { updatedGroup, wasAdded } = result;
+
+        if (!wasAdded) {
+            return sendResponse(res, 400, "La receta ya está en el grupo", {
+                group: updatedGroup,
+                wasAdded
+            });
+        }
+        sendResponse(res, 200, "Receta agregada al grupo exitosamente", {
+            group: updatedGroup,
+            wasAdded
+        });
+    });
+
+    removeRecipeFromGroup = catchAsync(async (req, res, next) => {
+        const groupId = req.params.id;
+        const { recipeId } = req.body;
+        const result = await GroupService.removeRecipeFromGroup(groupId, recipeId);
+        if (!result || !result.updatedGroup) {
+            return sendResponse(res, 404, "Grupo no encontrado", null);
+        }
+        const { updatedGroup, wasRemoved } = result;
+
+        if (!wasRemoved) {
+            return sendResponse(res, 400, "La receta no está en el grupo", {
+                group: updatedGroup,
+                wasRemoved
+            });
+        }
+        sendResponse(res, 200, "Receta eliminada del grupo exitosamente", {
+            group: updatedGroup,
+            wasRemoved
+        });
+    });
+
+
 }
 
 export default new GroupController();

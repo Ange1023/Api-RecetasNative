@@ -33,6 +33,14 @@ class GroupService {
         return await groupModel.toggleMember(groupId, userId);
     } 
 
+    async addRecipeToGroup(groupId, recipeId) {
+        return await groupModel.addRecipeToGroup(groupId, recipeId);
+    }
+
+    async removeRecipeFromGroup(groupId, recipeId) {
+        return await groupModel.removeRecipeFromGroup(groupId, recipeId);
+    }
+
 }
 
 export default new GroupService();
