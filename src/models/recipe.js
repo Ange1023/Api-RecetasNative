@@ -65,6 +65,38 @@ class recipeModel extends Basemodel {
         };
     }
 
+    async getFavoritesOfUser(userId, options = { currentPage: 1, limit: 10 }) {
+        const { currentPage, limit } = options;
+        const skip = (currentPage - 1) * limit;
+
+        const User = (await import('../schemas/user.js')).default;
+        const user = await User.findById(userId).select('favoriteRecipes');
+        const favoriteIds = user?.favoriteRecipes || [];
+
+        const totalCount = await this.model.countDocuments({ _id: { $in: favoriteIds } });
+        const totalPages = Math.ceil(totalCount / limit);
+
+        let data = await this.model.find({ _id: { $in: favoriteIds } })
+            .skip(skip)
+            .limit(limit)
+            .populate('user_id', 'name profileImage lastName')
+            .lean({ virtuals: true });
+
+        // Todas son favoritas
+        data = data.map(recipe => ({
+            ...recipe,
+            isFavorite: true
+        }));
+
+        return {
+            data,
+            totalCount,
+            totalPages,
+            currentPage,
+            limit
+        };
+    }
+
     // Las operaciones CRUD están en BaseModel
 }
 

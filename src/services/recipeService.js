@@ -67,6 +67,11 @@ class RecipeService {
         return data;
     }
 
+    getFavoritesOfUser(user_id, options = { currentPage: 1, limit: 10 }) {
+        const data = recipeModel.getFavoritesOfUser(user_id, options);
+        return data;
+    }
+
 }
 
 export default new RecipeService();

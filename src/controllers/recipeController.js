@@ -61,6 +61,16 @@ class RecipeController {
         });
     });
 
+    getFavoritesOfUser = catchAsync(async (req, res, next) => {
+        const { user_id } = req.body;
+        const { currentPage = 1, limit = 10 } = req.body;
+        console.log(`Obteniendo favoritos de usuario: ${user_id}, página: ${currentPage}, límite: ${limit}`);
+        
+        const options = { currentPage: parseInt(currentPage), limit: parseInt(limit) };
+        const favorites = await RecipeService.getFavoritesOfUser(user_id, options);
+        sendResponse(res, 200, 'Recetas favoritas obtenidas exitosamente', favorites);
+    });
+
 }
 
 export default new RecipeController();

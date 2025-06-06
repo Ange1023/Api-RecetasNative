@@ -11,6 +11,7 @@ const router = express.Router();
 router.get("/all", RecipeController.getAll);
 router.post("/paginated", RecipeController.getPaginated);
 router.post("/rate", RecipeController.rateRecipe); // POST /recipes/rate
+router.post("/favoritesUser", RecipeController.getFavoritesOfUser); // POST /recipes/favoritesUser
 router.route("/").post(RecipeController.create); // POST /recipes
 router
   .route("/:id") // Middleware de autenticación
