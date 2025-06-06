@@ -60,6 +60,29 @@ const userSchema = new mongoose.Schema({
             message: 'FavoriteRecipes must be an array of Recipe IDs',
         },
     },
+
+    followers: {
+        default: [],
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+        validate: {
+            validator: function (users) {
+                return Array.isArray(users);
+            },
+            message: 'Followers must be an array of User IDs',
+        },
+    },
+
+    following: {
+        default: [],
+        type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+        validate: {
+            validator: function (users) {
+                return Array.isArray(users);
+            },
+            message: 'Following must be an array of User IDs',
+        },
+    },
+
     createdAt: {
         type: Date,
         default: Date.now,

@@ -1,10 +1,26 @@
 import group from "../schemas/group.js";
+import User from "../schemas/user.js";  
 import BaseModel from "../utils/baseModel.js";
 
 class groupModel extends BaseModel {
 
     constructor(){
         super(group)
+    }
+
+    create = async (groupData) => {
+        // Crea un nuevo grupo
+        const newGroup = await group.create(groupData);
+
+        // Agrega el grupo al array createdGroups del usuario creador
+        if (newGroup.user_id) {
+            await User.findByIdAndUpdate(
+                newGroup.user_id,
+                { $addToSet: { createdGroups: newGroup._id } }
+            );
+        }
+
+        return newGroup;
     }
 
     async addRecipeToGroup(groupId, recipeId) {

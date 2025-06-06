@@ -60,6 +60,20 @@ class UserService {
         return data;
     }
 
+    async toggleFollowUser(currentUserId, targetUserId) {
+        const data = await UserModel.toggleFollowUser(currentUserId, targetUserId);
+        if (!data) throw new AppError("User not found", 404, null);
+
+        return data;
+    }
+
+    async getProfile(userId) {
+        const data = await UserModel.getProfile(userId);
+        if (!data) throw new AppError("User not found", 404, null);
+
+        return data;
+    }
+
 }
     
 
