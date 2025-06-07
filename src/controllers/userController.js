@@ -74,6 +74,16 @@ class userController {
             user,
         });
     });
+
+    updateUserProfile = catchAsync(async (req, res, next) => {
+        const user = await userService.updateUserProfile(req.params.id, req.body);
+        if (!user) {
+            return sendResponse(res, 404, "Usuario no encontrado", null);
+        }
+        sendResponse(res, 200, "Configuración de usuario actualizada exitosamente", {
+            user,
+        });
+    });
     
 }
 

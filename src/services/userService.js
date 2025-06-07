@@ -74,6 +74,13 @@ class UserService {
         return data;
     }
 
+    async updateUserProfile(userId, profileData) {
+        const data = await UserModel.updateUserProfile(userId, profileData);
+        if (!data) throw new AppError("User not found", 404, null);
+
+        return data;
+    }
+
 }
     
 
