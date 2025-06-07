@@ -87,7 +87,9 @@ class userModel extends BaseModel {
         }
 
         // Opcional: devuelve el usuario actualizado
-        return await User.findById(currentUserId);
+        return await 
+        User.findById(currentUserId)
+            .populate('following', '_id name lastname profileImage')
     }
 
     async getProfile(userId) {
