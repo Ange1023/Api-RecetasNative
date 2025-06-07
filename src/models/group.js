@@ -1,5 +1,6 @@
 import group from "../schemas/group.js";
 import User from "../schemas/user.js";  
+import Recipe from "../schemas/recipe.js";
 import BaseModel from "../utils/baseModel.js";
 
 class groupModel extends BaseModel {
@@ -25,25 +26,29 @@ class groupModel extends BaseModel {
 
     async addRecipeToGroup(groupId, recipeId) {
         // Busca el grupo actual
-        const groupDoc = await
-        group.findById(groupId);
+        const groupDoc = await group.findById(groupId);
         if (!groupDoc) return null;
         // Verifica si la receta ya está en el grupo
         const isRecipeInGroup = groupDoc.recipes.includes(recipeId);
-       
 
         let updatedGroup;
 
         // Si la receta ya está en el grupo retorna
         if (isRecipeInGroup) return { updatedGroup: groupDoc, wasAdded: false };
 
-
-        // Si no está, la agrega
+        // Si no está, la agrega al grupo
         updatedGroup = await group.findOneAndUpdate(
             { _id: groupId },
             { $addToSet: { recipes: recipeId } },
             { new: true }
-        );        
+        );
+        let updateRecipe
+        // También agrega el groupId al array groups de la receta
+        updateRecipe = await Recipe.findByIdAndUpdate(
+            recipeId,
+            { $addToSet: { groups: groupId } }
+        );
+
         return { updatedGroup, wasAdded: true };
     }
 
@@ -64,6 +69,15 @@ class groupModel extends BaseModel {
             { $pull: { recipes: recipeId } },
             { new: true }
         );
+
+        // Quita el groupId del array groups de la receta
+        let updatedRecipe;
+
+        updatedRecipe = await Recipe.findByIdAndUpdate(
+            recipeId,
+            { $pull: { groups: groupId } }
+        );
+
         return { updatedGroup, wasRemoved: true };
     }
 

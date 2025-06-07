@@ -85,6 +85,16 @@ class userController {
         });
     });
     
+    softDelete = catchAsync(async (req, res, next) => {
+        const user = await userService.softDeleteUser(req.params.id);
+        if (!user) {
+            return sendResponse(res, 404, "Usuario no encontrado", null);
+        }
+        sendResponse(res, 200, "Usuario eliminado exitosamente", {
+            user,
+        });
+    });  
+
 }
 
 export default new userController();
