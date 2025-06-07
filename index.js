@@ -9,14 +9,17 @@ import categoryRoutes from "./src/routes/categoryRoutes.js";
 import groupRoutes from "./src/routes/groupRoutes.js";
 import database from "./src/database/database.js";
 import { errorMiddleware } from "./src/utils/appError.js";
+import uploadRoute from "./src/routes/upload.js";
 dotenv.config();
 
 const app = express();
 
 app.use(cors());
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use('/api', uploadRoute);
 app.use("/user", userRoutes);
 app.use("/auth", authRoutes);
 app.use("/recipe", recipeRoutes);
