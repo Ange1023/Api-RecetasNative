@@ -60,7 +60,7 @@ class userController {
         if (!user) {
             return sendResponse(res, 404, "Usuario no encontrado", null);
         }
-        sendResponse(res, 200, "Usuario seguido/desseguido exitosamente", {
+        sendResponse(res, 200, "Usuario seguido/deseguido exitosamente", {
             user,
         });
     });

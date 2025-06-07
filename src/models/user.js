@@ -83,23 +83,43 @@ class userModel extends BaseModel {
         const currentUser = await User.findById(currentUserId);
         const targetUser = await User.findById(targetUserId);
         if (!currentUser || !targetUser) return null;
+
         const targetObjId = new mongoose.Types.ObjectId(targetUserId);
+        const currentObjId = new mongoose.Types.ObjectId(currentUserId);
+
         const isFollowing = currentUser.following.some(id => id.equals(targetObjId));
-        // Si ya sigue al usuario, lo deja de seguir; si no, lo comienza a seguir
-        const update = isFollowing
-            ? { $pull: { following: targetObjId } }
-            : { $addToSet: { following: targetObjId } };
-        return await User.findByIdAndUpdate(
-            currentUserId,
-            update,
-            { new: true }
-        );
+
+        if (isFollowing) {
+            // Dejar de seguir
+            await User.findByIdAndUpdate(
+                currentUserId,
+                { $pull: { following: targetObjId } }
+            );
+            await User.findByIdAndUpdate(
+                targetUserId,
+                { $pull: { followers: currentObjId } }
+            );
+        } else {
+            // Comenzar a seguir
+            await User.findByIdAndUpdate(
+                currentUserId,
+                { $addToSet: { following: targetObjId } }
+            );
+            await User.findByIdAndUpdate(
+                targetUserId,
+                { $addToSet: { followers: currentObjId } }
+            );
+        }
+
+        // Opcional: devuelve el usuario actualizado
+        return await User.findById(currentUserId);
     }
 
     async getProfile(userId) {
     // 1. Trae el usuario con populate
     const user = await User.findById(userId)
         .populate('createdGroups')
+        .populate('following', '_id name lastname profileImage')
         .select('-password -__v -createdAt -updatedAt -deletedAt')
         .lean();
 
