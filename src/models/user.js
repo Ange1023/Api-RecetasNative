@@ -1,6 +1,7 @@
 import User from '../schemas/user.js';
 import mongoose from 'mongoose';
 import BaseModel from '../utils/baseModel.js';
+import bcrypt from "bcrypt";
 import recipe from './recipe.js';
 class userModel extends BaseModel {
     
@@ -34,6 +35,30 @@ class userModel extends BaseModel {
     async getOne(filter){
         return await User.findOne(filter);
     }
+
+    async updateUserProfile(userId, userData) {
+        const user = await User.findById(userId);
+        if (!user) return null;
+
+
+        if (userData.password && userData.newPassword) {
+
+            const samePassword = await bcrypt.compare(userData.password, user.password);
+
+            if (samePassword) {
+                user.password = await bcrypt.hash(userData.newPassword, 10);
+            }
+        }
+
+        if (userData.name) user.name = userData.name;
+        if (userData.lastName) user.lastName = userData.lastName;
+        if (userData.email) user.email = userData.email;
+        if (userData.profileImage) user.profileImage = userData.profileImage;
+    
+        return await user.save();
+    }
+
+
 
     async toggleFavoriteRecipe(userId, recipeId) {
         const user = await User.findById(userId);
