@@ -115,6 +115,7 @@ class userModel extends BaseModel {
         return await 
         User.findById(currentUserId)
             .populate('following', '_id name lastname profileImage')
+            .populate('followers', '_id name lastname profileImage')
     }
 
     async getProfile(userId) {
