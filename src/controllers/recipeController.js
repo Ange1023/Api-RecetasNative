@@ -44,7 +44,7 @@ class RecipeController {
 
     getPaginated = catchAsync(async (req, res, next) => {
         const { currentPage = 1, limit = 10, viewer_id = null, ...filters } = req.body;  
-        // Puedes construir un filtro más avanzado aquí si lo necesitas
+  
         const options = { currentPage: parseInt(currentPage), limit: parseInt(limit), viewer_id: viewer_id ? viewer_id : null };
         const result = await RecipeService.paginateRecipes(filters, options);
         sendResponse(res, 200, 'Recetas paginadas', result);

@@ -25,7 +25,7 @@ const recipeSchema = new mongoose.Schema({
                 description: {
                     type: String,
                     required: [true, 'Step description is required'],
-                    minlength: [50, 'Step description must be at least 5 characters long'],
+                    minlength: [50, 'Step description must be at least 50 characters long'],
                     maxlength: [500, 'Step description must not exceed 500 characters'],
                 },
                 stepImage: {
@@ -94,7 +94,7 @@ const recipeSchema = new mongoose.Schema({
                 unit: {
                     type: String,
                     enum: {
-                        values: ['g', 'kg', 'ml', 'l', 'tsp', 'tbsp', 'cup', 'oz', 'lb','unit'],
+                        values: ['g', 'kg', 'ml', 'l', 'tsp', 'tbsp', 'cup', 'oz', 'lb','unit','dash','pinch'],
                         message: 'Unit must be one of g, kg, ml, l, tsp, tbsp, cup, oz, lb, unit',
                     },
                 },
