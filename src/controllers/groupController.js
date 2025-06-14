@@ -44,6 +44,11 @@ class GroupController {
 
     getPaginated = catchAsync(async (req, res, next) => {
         const { currentPage = 1, limit = 10, ...filters } = req.body;
+
+        if(filters.userId){
+            filters.user_id = filters.userId            
+        }
+
         // Puedes construir un filtro más avanzado aquí si lo necesitas
         const options = { currentPage: parseInt(currentPage), limit: parseInt(limit) };
         const result = await GroupService.paginateGroups(filters, options);
